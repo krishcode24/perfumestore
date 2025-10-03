@@ -65,7 +65,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function calcTotals(cart){
       const subtotal = cart.reduce((s,i)=> s + i.product.price * i.qty, 0);
-      const shipping = subtotal > 200 ? 0.00 : (cart.length ? 8.00 : 0.00);
+      const totalItems = cart.reduce((s,i)=> s + i.qty, 0);
+      let shipping = 0.00;
+      if(totalItems === 1) shipping = 8.00;
+      else if(totalItems > 1) shipping = 10.00;
       const total = +(subtotal + shipping).toFixed(2);
       return { subtotal, shipping, total };
     }
@@ -239,4 +242,5 @@ document.addEventListener('DOMContentLoaded', function () {
      * INIT
      ***********/
     (function init(){ renderProducts(); renderCart(); initEvents(); })();
+
 });
